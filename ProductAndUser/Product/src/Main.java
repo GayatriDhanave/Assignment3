@@ -1,104 +1,168 @@
 import com.entity.Product;
-import com.service.ProductService;
+import com.service.RetailServices;
+import com.service.ServiceInterface;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+
+   static Scanner scanner = new Scanner(System.in);
+    static ServiceInterface productService = new RetailServices();
     public static void main (String[] args) {
-
-        Scanner scanner = new Scanner(System.in);
-        ProductService productService = new ProductService();
         int choice = 0;
-
-//        Set<Product> productSet = new HashSet<>();
         do {
-            System.out.println("1. Add Product");
-            System.out.println("2. Update Product Price");
-            System.out.println("3. Update Product Quantity");
-            System.out.println("4. Remove Product");
-            System.out.println("5. Remove User and Product");
-            System.out.println("6. Get Products");
-            System.out.println("7. Get Products based on price");
-            System.out.println("8. Exit");
+            printMenu();
             System.out.println("Enter your choice: ");
             choice = scanner.nextInt();
             switch (choice) {
-                case 1:
-                    System.out.println("Enter User Name: ");
-                    String name = scanner.next();
-                    System.out.println("Enter number of products: ");
-                    int n = scanner.nextInt();
-                    for (int i = 0; i < n; i++) {
-                        System.out.println("Enter Product Name: ");
-                        String prodname = scanner.next();
-                        System.out.println("Enter Product Quantity: ");
-                        float quantity = scanner.nextFloat();
-                        System.out.println("Enter Product Price: ");
-                        double price = scanner.nextDouble();
-                        Set<Product> productSet = new HashSet<>();
-                        productSet.add(new Product(prodname, quantity, price));
-                        productService.addProduct(name, productSet);
-
-                    }
-                    System.out.println("Product Added");
-                    break;
-                case 2:
-                    System.out.println("Enter User Name: ");
-                    name = scanner.next();
-                    System.out.println("Enter Product Name: ");
-                    String prodname = scanner.next();
-                    System.out.println("Enter Product Price: ");
-                    double price = scanner.nextDouble();
-                    productService.updateProductPrice(name, price, prodname);
-                    System.out.println("Product Price Updated");
-                    break;
-                case 3:
-                    System.out.println("Enter User Name: ");
-                    name = scanner.next();
-                    System.out.println("Enter Product Name: ");
-                    prodname = scanner.next();
-                    System.out.println("Enter Product Quantity: ");
-                    float quantity = scanner.nextFloat();
-                    productService.updateProductQuantity(name, quantity, prodname);
-                    System.out.println("Product Quantity Updated");
-                    break;
-                case 4:
-                    System.out.println("Enter User Name: ");
-                    name = scanner.next();
-                    System.out.println("Enter Product Name: ");
-                    prodname = scanner.next();
-                    productService.removeProduct(name, prodname);
-                    System.out.println("Product Removed");
-                    break;
-                case 5:
-                    System.out.println("Enter User Name: ");
-                    name = scanner.next();
-                    productService.removeUserandProduct(name);
-                    System.out.println("User and Product Removed");
-                    break;
-                case 6:
-                    System.out.println("Enter User Name: ");
-                    name = scanner.next();
-                    productService.getProducts(name);
-
-                    break;
-                    case 7:
-                        System.out.println("Enter User Name: ");
-                        name = scanner.next();
-                        productService.getProductsBasedOnPrice(name);
-                        break;
-                case 8:
+                case 1 -> {
+                        displayUserMenu();
+                }
+                case 2 -> {
+                    displayProductMenu();
+                }
+                case 3 -> {
+                    displayOrderMenu();
+                }
+                case 4 -> {
                     System.out.println("Exiting...");
-                    break;
-                default:
-                    System.out.println("Invalid Choice");
-                    break;
+                }
+                default -> System.out.println("Invalid Choice");
+
+            }
+        } while (choice != 4);
+    }
+
+    private static void printMenu () {
+        System.out.println("1. User");
+        System.out.println("2. Product");
+        System.out.println("3. Order");
+        System.out.println("4. Exit");
+    }
+
+    private static void productMenu () {
+        System.out.println("1. Add Product");
+        System.out.println("2. Update Product Price");
+        System.out.println("3. Update Product Quantity");
+//        System.out.println("4. Remove Product");
+//        System.out.println("5. Remove User and Product");
+        System.out.println("4. Get Products");
+        System.out.println("5. Get Products Based On Price");
+        System.out.println("6. Exit");
+    }
+
+    static void displayProductMenu(){
+        int choice=0;
+        do {
+            productMenu();
+            System.out.println("Enter your choice: ");
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1 -> {
+                    productService.addProduct();
+                }
+                case 2 -> {
+                    productService.updateProductPrice();
+                }
+                case 3 -> {
+                    productService.updateProductQuantity();
+                }
+                case 4 -> {
+                    productService.removeProduct();
+                }
+                case 5 -> {
+                    productService.removeUserandProduct();
+                }
+                case 6 ->{
+                    productService.getProducts();
+                }
+
+                case 7 -> {
+                    productService.getProductsBasedOnPrice();
+                }
+                case 8 -> {
+                    System.out.println("Exiting...");
+                }
+                default -> System.out.println("Invalid Choice");
+
             }
         } while (choice != 8);
     }
+
+    static void displayOrderMenu(){
+        int choice=0;
+        do {
+            orderMenu();
+            System.out.println("Enter your choice: ");
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1 -> {
+                    productService.addProduct();
+                }
+                case 2 -> {
+                    productService.updateProductPrice();
+                }
+                case 3 -> {
+                    productService.updateProductQuantity();
+                }
+                case 4 -> {
+                    productService.getProducts();
+                }
+                case 5 -> {
+                    System.out.println("Exiting...");
+                }
+                default -> System.out.println("Invalid Choice");
+
+            }
+        } while (choice != 5);
+    }
+    private static void orderMenu () {
+        System.out.println("1. Place Order");
+        System.out.println("2. Update Order");
+        System.out.println("3. Remove Order");
+        System.out.println("4. Get Orders");
+        System.out.println("5. Exit");
+    }
+    static void displayUserMenu(){
+        int choice=0;
+        do {
+            userMenu();
+            System.out.println("Enter your choice: ");
+            choice = scanner.nextInt();
+            switch (choice) {
+                case 1 -> {
+                    productService.addProduct();
+                }
+                case 2 -> {
+                    productService.updateProductPrice();
+                }
+                case 3 -> {
+                    productService.updateProductQuantity();
+                }
+                case 4 -> {
+                    productService.removeProduct();
+                }
+                case 5 -> {
+                    System.out.println("Exiting...");
+                }
+                default -> System.out.println("Invalid Choice");
+
+            }
+        } while (choice != 5);
+    }
+    private static void userMenu () {
+        System.out.println("1. Add User");
+        System.out.println("2. Update User");
+        System.out.println("3. Remove User");
+        System.out.println("4. Get Users");
+        System.out.println("5. Exit");
+    }
+
+
+
+
 
 }
