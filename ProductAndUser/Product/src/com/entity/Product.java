@@ -86,7 +86,7 @@ public class Product implements Comparable<Product>{
                 "productId=" + productId +
                 ", name='" + name + '\'' +
                 ", quantity=" + quantity +
-                ", price=" + price +
+//                ", price=" + price +
                 ", totalPrice=" + totalPrice +
                 '}';
     }

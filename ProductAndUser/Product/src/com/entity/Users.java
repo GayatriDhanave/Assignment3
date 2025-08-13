@@ -23,5 +23,11 @@ public class Users {
         this.name = name;
     }
 
-
+    @Override
+    public String toString () {
+        return "Users{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

@@ -4,7 +4,7 @@ import com.entity.Product;
 
 import java.util.*;
 
-public class ProductService implements ServiceInterface{
+public class ProdService implements ServiceInterface{
 //    map.computeIfAbsent(key, k -> new HashSet<V>()).add(v)
 
     Set<Product> productSet = new HashSet<>();
@@ -90,7 +90,7 @@ public class ProductService implements ServiceInterface{
         System.out.println("User and Product Removed");
     }
 
-    public void getProducts () {
+    public void printProducts () {
         System.out.println("Enter User Name: ");
         String name = scanner.next();
         if (products.containsKey(name)) {
@@ -120,6 +120,11 @@ public class ProductService implements ServiceInterface{
         for (Product product1 : sortedList) {
             System.out.println(product1);
         }
+    }
+
+    @Override
+    public List<Product> getProducts () {
+        return List.of();
     }
 
 }

@@ -1,5 +1,9 @@
 package com.service;
 
+import com.entity.Product;
+
+import java.util.List;
+
 public interface ServiceInterface {
     public void addProduct ();
     public void updateProductPrice () ;
@@ -10,7 +14,9 @@ public interface ServiceInterface {
 
     void removeUserandProduct ();
 
-    void getProducts ();
+    void printProducts ();
 
     void getProductsBasedOnPrice ();
+
+    List<Product> getProducts();
 }

@@ -11,14 +11,15 @@ public class Order {
     private long orderId;
 //    private Users user;
     private List<Product> product;
+
     private OrderStatus orderStatus;
     private double totalPrice;
 
-    public Order (long orderId, List<Product> product, OrderStatus orderStatus, double totalPrice) {
+    public Order (long orderId, List<Product> product, OrderStatus orderStatus) {
         this.orderId = orderId;
         this.product = product;
         this.orderStatus = orderStatus;
-        this.totalPrice = totalPrice;
+        this.totalPrice = product.stream().mapToDouble(Product::getTotalPrice).sum();
     }
 
     public long getOrderId () {
@@ -51,5 +52,15 @@ public class Order {
 
     public void setTotalPrice (double totalPrice) {
         this.totalPrice = totalPrice;
+    }
+
+    @Override
+    public String toString () {
+        return "Order{" +
+                "orderId=" + orderId +
+                ", product=" + product +
+                ", orderStatus=" + orderStatus +
+                ", totalPrice=" + totalPrice +
+                '}';
     }
 }

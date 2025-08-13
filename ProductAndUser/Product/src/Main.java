@@ -1,16 +1,19 @@
-import com.entity.Product;
-import com.service.RetailServices;
+import com.service.OrderService;
+import com.service.ProductServices;
 import com.service.ServiceInterface;
+import com.service.UserService;
 
-import java.util.List;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
 
-   static Scanner scanner = new Scanner(System.in);
-    static ServiceInterface productService = new RetailServices();
+    static Scanner scanner = new Scanner(System.in);
+    static ServiceInterface productService = new ProductServices();
+    static UserService userService = new UserService();
+    static OrderService orderService = new OrderService();
+
     public static void main (String[] args) {
         int choice = 0;
         do {
@@ -18,22 +21,16 @@ public class Main {
             System.out.println("Enter your choice: ");
             choice = scanner.nextInt();
             switch (choice) {
-                case 1 -> {
-                        displayUserMenu();
-                }
-                case 2 -> {
-                    displayProductMenu();
-                }
-                case 3 -> {
-                    displayOrderMenu();
-                }
-                case 4 -> {
-                    System.out.println("Exiting...");
-                }
+                case 1 -> displayUserMenu();
+
+                case 2 -> displayProductMenu();
+                case 3 -> displayOrderMenu();
+                case 4 -> System.out.println("Exiting...");
                 default -> System.out.println("Invalid Choice");
 
             }
         } while (choice != 4);
+
     }
 
     private static void printMenu () {
@@ -46,42 +43,71 @@ public class Main {
     private static void productMenu () {
         System.out.println("1. Add Product");
         System.out.println("2. Update Product Price");
-        System.out.println("3. Update Product Quantity");
+
 //        System.out.println("4. Remove Product");
 //        System.out.println("5. Remove User and Product");
+        System.out.println("3. Remove Products");
         System.out.println("4. Get Products");
         System.out.println("5. Get Products Based On Price");
         System.out.println("6. Exit");
     }
 
-    static void displayProductMenu(){
-        int choice=0;
+    static void displayProductMenu () {
+        int choice = 0;
         do {
             productMenu();
             System.out.println("Enter your choice: ");
             choice = scanner.nextInt();
             switch (choice) {
+                case 1 -> productService.addProduct();
+
+                case 2 -> productService.updateProductPrice();
+
+                case 3 -> productService.removeProduct();
+
+//                case 4 -> {
+//                    productService.removeUserandProduct();
+//                }
+                case 4 -> productService.printProducts();
+
+
+                case 5 -> productService.getProductsBasedOnPrice();
+
+                case 6 -> System.out.println("Exiting...");
+
+                default -> System.out.println("Invalid Choice");
+
+            }
+        } while (choice != 6);
+    }
+
+    static void displayOrderMenu () {
+        int choice = 0;
+        do {
+            orderMenu();
+            System.out.println("Enter your choice: ");
+            choice = scanner.nextInt();
+            switch (choice) {
                 case 1 -> {
-                    productService.addProduct();
+                    orderService.placeOrder();
                 }
                 case 2 -> {
-                    productService.updateProductPrice();
+                    orderService.updateOrderStatus();
                 }
                 case 3 -> {
-                    productService.updateProductQuantity();
+                    orderService.removeOrder();
                 }
                 case 4 -> {
-                    productService.removeProduct();
+                    orderService.printOrders();
                 }
                 case 5 -> {
-                    productService.removeUserandProduct();
+                    orderService.getOrdersBasedOnPrice();
                 }
-                case 6 ->{
-                    productService.getProducts();
+                case 6 -> {
+                    orderService.getOrdersBasedOnStatus();
                 }
-
                 case 7 -> {
-                    productService.getProductsBasedOnPrice();
+                    orderService.getOrdersBasedOnUser();
                 }
                 case 8 -> {
                     System.out.println("Exiting...");
@@ -92,58 +118,35 @@ public class Main {
         } while (choice != 8);
     }
 
-    static void displayOrderMenu(){
-        int choice=0;
-        do {
-            orderMenu();
-            System.out.println("Enter your choice: ");
-            choice = scanner.nextInt();
-            switch (choice) {
-                case 1 -> {
-                    productService.addProduct();
-                }
-                case 2 -> {
-                    productService.updateProductPrice();
-                }
-                case 3 -> {
-                    productService.updateProductQuantity();
-                }
-                case 4 -> {
-                    productService.getProducts();
-                }
-                case 5 -> {
-                    System.out.println("Exiting...");
-                }
-                default -> System.out.println("Invalid Choice");
-
-            }
-        } while (choice != 5);
-    }
     private static void orderMenu () {
         System.out.println("1. Place Order");
-        System.out.println("2. Update Order");
+        System.out.println("2. Update Order status");
         System.out.println("3. Remove Order");
         System.out.println("4. Get Orders");
-        System.out.println("5. Exit");
+        System.out.println("5. Get Orders Based On Price");
+        System.out.println("6. Get Orders Based On Status");
+        System.out.println("7. Get Orders Based On User");
+        System.out.println("8. Exit");
     }
-    static void displayUserMenu(){
-        int choice=0;
+
+    static void displayUserMenu () {
+        int choice = 0;
         do {
             userMenu();
             System.out.println("Enter your choice: ");
             choice = scanner.nextInt();
             switch (choice) {
                 case 1 -> {
-                    productService.addProduct();
+                    userService.addUser();
                 }
                 case 2 -> {
-                    productService.updateProductPrice();
+                    userService.updateUser();
                 }
                 case 3 -> {
-                    productService.updateProductQuantity();
+                    userService.removeUser();
                 }
                 case 4 -> {
-                    productService.removeProduct();
+                    userService.printUsers();
                 }
                 case 5 -> {
                     System.out.println("Exiting...");
@@ -153,6 +156,7 @@ public class Main {
             }
         } while (choice != 5);
     }
+
     private static void userMenu () {
         System.out.println("1. Add User");
         System.out.println("2. Update User");
@@ -160,9 +164,6 @@ public class Main {
         System.out.println("4. Get Users");
         System.out.println("5. Exit");
     }
-
-
-
 
 
 }
